@@ -5,5 +5,9 @@
     .calendar-day {
         // each cell has 1/7 of available width
         flex-basis: 14%;
+
+        &.grayed-out {
+            background-color: #EFEFEF;
+        }
     }
 }
