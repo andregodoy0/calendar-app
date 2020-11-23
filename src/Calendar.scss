@@ -2,13 +2,8 @@
     display: flex;
     flex-flow: column wrap;
 
-    .cell {
-        border: 1px solid lightgray;
-        min-width: 75px;
-        min-height: 75px;
-
-        &:nth-child(7n) {
-            flex-basis: 100%;
-        }
+    .calendar-day {
+        // each cell has 1/7 of available width
+        flex-basis: 14%;
     }
 }
