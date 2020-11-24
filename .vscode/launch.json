@@ -5,10 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Attach Firefox",
+            "request": "attach",
+            "type": "firefox",
+            "url": "http://localhost:3000",
+            "firefoxExecutable": "developer",
+            "webRoot": "${workspaceFolder}/src",
+            "pathMappings": [
+                {
+                    "url": "http://localhost:3000/mnt/c/development/javascript/calendar/src",
+                    "path": "${workspaceFolder}/src"
+                }
+            ]
+        },
+        {
             "name": "Launch Firefox",
             "request": "launch",
             "type": "firefox",
             "url": "http://localhost:3000",
+            "keepProfileChanges": true,
             "firefoxExecutable": "developer",
             "webRoot": "${workspaceFolder}/src",
             "pathMappings": [

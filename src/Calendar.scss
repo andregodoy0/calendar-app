@@ -5,9 +5,38 @@
     .calendar-day {
         // each cell has 1/7 of available width
         flex-basis: 14%;
+        cursor: pointer;
 
-        &.grayed-out {
-            background-color: #EFEFEF;
+        &.header {
+            background-color: lightblue;
+            cursor: unset;
+        }
+
+        &.is-weekend {
+            background-color: #efefef;
+
+            .MuiTypography-colorTextSecondary {
+                color: blue;
+            }
+        }
+
+        &.is-other-month .MuiTypography-colorTextSecondary {
+            color: #cccccc;
         }
     }
+}
+
+.new-reminder-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .MuiDialogContent-root {
+        max-width: 700px;
+        max-height: 500px;
+        
+        .MuiPaper-root {
+            padding: 24px;
+        }
+    } 
 }

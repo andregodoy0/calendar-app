@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import moment, { Moment } from 'moment'
 import classnames from 'classnames'
+import { Grid, Card, CardHeader, CardContent, Modal, DialogContent} from '@material-ui/core'
 
 import './Calendar.scss';
-import { Grid, Card, CardHeader, CardContent, Modal, DialogContent} from '@material-ui/core'
-import ReminderList from './ReminderList';
-// import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded'
+import AddReminderModal from './AddReminderModal';
 
 function Calendar() {
     const [isModalOpen, setModalOpen] = useState(false)
     const [newReminderDay, setReminderDay] = useState(moment())
 
-    const handleClose = () => {
+    const handleModalClose = () => {
         setModalOpen(false)
     }
     const createNewTask = (day: Moment) => {
@@ -24,7 +23,7 @@ function Calendar() {
         const columns = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         return columns.map(dayOfWeek => (
             <Card variant='outlined' className='header calendar-day' key={ dayOfWeek }>
-                <CardHeader title={ dayOfWeek } fontSize='small' />
+                <CardHeader subheader={ dayOfWeek } size='small' margin='dense' />
             </Card>
         ))
     }
@@ -36,7 +35,8 @@ function Calendar() {
                 square 
                 className={ classnames(
                     'calendar-day', 
-                    {'grayed-out': !calendarDay.isSame(moment(), 'month') || dayOfWeek === 0 || dayOfWeek === 6}
+                    {'is-weekend': dayOfWeek === 0 || dayOfWeek === 6},
+                    {'is-other-month': !calendarDay.isSame(moment(), 'month')},
                 ) } 
                 key={ calendarDay.format('YYYYMMDD') }
             >
@@ -48,9 +48,6 @@ function Calendar() {
                     onClick={() => createNewTask(calendarDay)}
                 >
                 </CardContent>
-                    {/* <IconButton aria-label="Create new task">
-                        <AddCircleRoundedIcon />K
-                    </IconButton> */}
             </Card>
         )
     }
@@ -82,12 +79,13 @@ function Calendar() {
         <div>
             <Modal
                 open={isModalOpen}
-                onClose={handleClose}
+                onClose={handleModalClose}
+                className='new-reminder-modal'
                 aria-labelledby="new-reminder"
                 aria-describedby="add-new-reminder"
             >
                 <DialogContent>
-                    <ReminderList
+                    <AddReminderModal
                         dayOfMonth={newReminderDay}
                     />
                 </DialogContent>
