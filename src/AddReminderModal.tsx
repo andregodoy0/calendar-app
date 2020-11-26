@@ -4,18 +4,16 @@ import { Button, Paper, TextField } from '@material-ui/core'
 import { GithubPicker } from 'react-color'
 
 import './AddReminderModal.scss'
+import { Reminder } from 'types/reminders'
+import { Dispatch } from 'reducers'
+import { addReminder } from 'actions/reminders'
 
 interface AddReminderModalProps {
-    dayOfMonth: Moment
-}
-interface Reminder {
-    reminder: string
-    time: string
-    color: string 
-    city: string
+    dayOfMonth: Moment,
+    dispatch: Dispatch
 }
 
-const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({dayOfMonth}) => {
+const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayOfMonth, dispatch }) => {
     const [reminderData, setReminderData] = useState({
         color: '#008B02',
         time: dayOfMonth.format("HH:MM")
@@ -28,6 +26,7 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({dayOf
     }
     const submitForm = () => {
         console.log(reminderData)
+        dispatch(addReminder(reminderData))
     }
     return (
         <Paper>
@@ -38,7 +37,7 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({dayOf
                     type='text'
                     value={reminderData.reminder}
                     label='Remind me to'
-                    onChange={event => updateReminder({reminder: event.target.value})}
+                    onChange={event => updateReminder({ reminder: event.target.value })}
                 />
                 <label></label>
                 <TextField
@@ -46,7 +45,7 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({dayOf
                     label={`on ${dayOfMonth.format('MMM DD')} at`}
                     type="time"
                     value={reminderData.time}
-                    onChange={event => updateReminder({time: event.target.value})}
+                    onChange={event => updateReminder({ time: event.target.value })}
                     inputProps={{
                         step: 1500, // 15 min
                     }}
@@ -56,22 +55,22 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({dayOf
                     type='text'
                     label='City'
                     value={reminderData.city}
-                    onChange={event => updateReminder({city: event.target.value})}
+                    onChange={event => updateReminder({ city: event.target.value })}
                 />
                 <GithubPicker
                     triangle='hide'
                     color={reminderData.color}
-                    onChangeComplete={({hex}) => updateReminder({color: hex})}
+                    onChangeComplete={({ hex }) => updateReminder({ color: hex })}
                 />
                 <Button
-                    variant='contained' 
+                    variant='contained'
                     color='primary'
-                    onClick={ submitForm }
+                    onClick={submitForm}
                 >
                     Add
                 </Button>
             </form>
-            
+
         </Paper>
     )
 }
