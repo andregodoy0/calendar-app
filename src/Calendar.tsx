@@ -136,6 +136,6 @@ const mapStateToProps = (state: State): ConnectedProps => {
     return {
         reminders: state.reminders.reminderList,
     }
-};
+}
 
 export default connect(mapStateToProps)(Calendar)

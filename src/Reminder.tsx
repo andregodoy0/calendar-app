@@ -6,7 +6,7 @@ import 'Reminder.scss'
 import { colorMap } from 'utils'
 import ReminderModal from 'ReminderModal'
 import { useDispatch } from 'react-redux'
-import { updateReminder } from 'actions/reminders'
+import { fetchWeatherForecast } from 'actions/reminders'
 import { Moment } from 'moment'
 import { DialogContent, Modal } from '@material-ui/core'
 
@@ -28,7 +28,8 @@ const Reminder: React.FunctionComponent<ReminderProps> = ({ calendarDay, data })
     }
     const onSubmit = (dayOfMonth: Moment, reminderData: ReminderData) => {
         setModalOpen(false)
-        dispatch(updateReminder(dayOfMonth, reminderData))
+        // fetchWeatherForecast also updates the reminder even if forecast is not necessary
+        dispatch(fetchWeatherForecast(dayOfMonth, reminderData))
     }
     return (
         <div
@@ -51,12 +52,13 @@ const Reminder: React.FunctionComponent<ReminderProps> = ({ calendarDay, data })
                 </DialogContent>
             </Modal>
             <div className='time'>{time}</div>
-            <div className='content'>{content}</div>
+            <div className='content' title={content}>{content}</div>
             {forecast &&
                 <img
                     className='forecast' 
                     src={forecast.icon}
-                    alt={`${forecast.condition} with max ${forecast.maxTemp} and min ${forecast.minTemp} in ${city}`}
+                    alt={`${forecast.condition} with max ${forecast.maxTemp}&deg; and min ${forecast.minTemp}&deg; in ${city}`}
+                    title={`${forecast.condition} with max ${forecast.maxTemp}&deg; and min ${forecast.minTemp}&deg; in ${city}`}
                 />
             }
         </div>
