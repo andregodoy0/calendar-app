@@ -32,7 +32,11 @@ export default function reminders(state: RemindersState = initialState, action: 
         case 'updateReminder': {
             const remindersForDay = [...state.reminderList[action.dayOfMonth.format('YYYYMMDD')]]
             const index = _.findIndex(remindersForDay, {id: action.reminder.id})
-            remindersForDay.splice(index, 1, action.reminder)
+            remindersForDay.splice(index, 1, {
+                ...action.reminder,
+                // create new id to force new render
+                id: _.uniqueId('reminder')
+            })
             return {
                 reminderList: {
                     ...state.reminderList,

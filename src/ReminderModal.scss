@@ -13,6 +13,7 @@
 
             .circle-picker {
                 flex-direction: row;
+                // Color component uses negative margin on element =(
                 margin: 12px 0px !important;
             }
         }

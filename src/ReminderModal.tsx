@@ -16,6 +16,7 @@ interface ReminderModalProps {
 
 const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDay, onSubmit, existingReminder }) => {
     const [reminderData, setReminderData] = useState(existingReminder || {
+        content: '',
         id: _.uniqueId('reminder'),
         color: colorSet[0],
         time: calendarDay.format("HH:MM")
@@ -28,7 +29,7 @@ const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDa
         })
     }
     const validateForm = () => {
-        setValidationError(!reminderData.content)
+        setValidationError(!reminderData.content.length)
         return validationError
     }
     const submitForm = () => {

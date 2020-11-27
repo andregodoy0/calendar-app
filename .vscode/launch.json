@@ -24,6 +24,7 @@
             "type": "firefox",
             "url": "http://localhost:3000",
             "keepProfileChanges": true,
+            "profile": "vscode-dev",
             "firefoxExecutable": "developer",
             "webRoot": "${workspaceFolder}/src",
             "pathMappings": [
