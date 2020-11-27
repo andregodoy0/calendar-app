@@ -19,13 +19,21 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
         color: colorSet[0],
         time: dayOfMonth.format("HH:MM")
     } as ReminderData)
+    const [validationError, setValidationError] = useState(false)
     const updateReminder = (updatedData: Partial<ReminderData>) => {
         setReminderData({
             ...reminderData,
             ...updatedData,
         })
     }
+    const validateForm = () => {
+        setValidationError(!reminderData.content)
+        return validationError
+    }
     const submitForm = () => {
+        if (validateForm()) {
+            return;
+        }
         onSubmit(dayOfMonth, reminderData)
     }
     return (
@@ -33,9 +41,14 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
             <h2>Create new reminder:</h2>
             <form noValidate autoComplete="off">
                 <TextField
+                    autoFocus
+                    required
+                    error={validationError}
+                    onBlur={() => validateForm()}
                     fullWidth
                     type='text'
                     value={reminderData.content}
+                    helperText='Must not be empty'
                     label='Remind me to'
                     onChange={event => updateReminder({ content: event.target.value })}
                 />
