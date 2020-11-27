@@ -16,8 +16,9 @@ interface ReminderModalProps {
 
 const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDay, onSubmit, existingReminder }) => {
     const [reminderData, setReminderData] = useState(existingReminder || {
-        content: '',
         id: _.uniqueId('reminder'),
+        city: '',
+        content: '',
         color: colorSet[0],
         time: calendarDay.format("HH:MM")
     } as ReminderData)
@@ -69,7 +70,6 @@ const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDa
                     fullWidth
                     type='text'
                     label='Where?'
-                    defaultValue='New York'
                     value={reminderData.city}
                     onChange={event => updateReminder({ city: event.target.value })}
                 />

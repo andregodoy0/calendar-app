@@ -10,7 +10,7 @@ import ReminderModal from 'ReminderModal'
 
 import { Dispatch, State } from 'reducers'
 import { ReminderData, ReminderMap } from 'types/reminders'
-import { addReminder } from 'actions/reminders'
+import { addReminder, fetchWeatherForecast } from 'actions/reminders'
 
 interface ConnectedProps {
     reminders: ReminderMap
@@ -24,7 +24,6 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
         setModalOpen(false)
     }
     const createNewTask = (day: Moment) => {
-        console.log(day)
         setModalOpen(true)
         setReminderDay(day)
     }
@@ -44,7 +43,7 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
                 {(reminders[keyForDayOfYear] || []).map(reminder =>
                     <Reminder
                         calendarDay={calendarDay}
-                        data={reminder} 
+                        data={reminder}
                         key={reminder.id}
                     />
                 )}
@@ -103,6 +102,7 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
     const onSubmit = (dayOfMonth: Moment, reminderData: ReminderData) => {
         dispatch(addReminder(dayOfMonth, reminderData))
         setModalOpen(false)
+        dispatch(fetchWeatherForecast(dayOfMonth, reminderData))
     }
 
     return (
