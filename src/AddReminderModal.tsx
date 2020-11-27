@@ -6,6 +6,7 @@ import { CirclePicker } from 'react-color'
 
 import 'AddReminderModal.scss'
 import { ReminderData } from 'types/reminders'
+import { colorSet } from 'utils'
 
 interface AddReminderModalProps {
     dayOfMonth: Moment,
@@ -13,12 +14,9 @@ interface AddReminderModalProps {
 }
 
 const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayOfMonth, onSubmit }) => {
-    const colorSet = [
-        '#ef9a9a', '#ce93d8', '#9fa8da', '#81d4fa', '#80cbc4', '#c5e1a5', '#fff59d', '#ffcc80',
-    ]
     const [reminderData, setReminderData] = useState({
         id: _.uniqueId('reminder'),
-        color: '#008B02',
+        color: colorSet[0],
         time: dayOfMonth.format("HH:MM")
     } as ReminderData)
     const updateReminder = (updatedData: Partial<ReminderData>) => {

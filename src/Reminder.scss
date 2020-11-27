@@ -4,11 +4,11 @@
     border-radius: 5px;
     padding: 1px;
 
-    $colors: #ef9a9a, #ce93d8, #9fa8da, #81d4fa, #80cbc4, #c5e1a5, #fff59d, #ffcc80;
+    $colors: ("red", #ef9a9a), ("purple", #9fa8da), ("green", #80cbc4), ("ÿellow", #fff59d), ("orange", #ffcc80), ("grey", #b0bec5);
 
     @each $color in $colors {
-        &.color-#{$color} {
-            background-color: $color;
+        &.color-#{nth($color, 1)} {
+            background-color: nth($color, 2);
         }
     }
 }
