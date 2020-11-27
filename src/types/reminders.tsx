@@ -4,3 +4,8 @@ export interface Reminder {
     color: string 
     city: string
 }
+
+export interface ReminderMap {
+    [dayOfMonth: string]: Reminder[]
+
+}

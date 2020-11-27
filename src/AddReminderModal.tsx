@@ -26,7 +26,7 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
     }
     const submitForm = () => {
         console.log(reminderData)
-        dispatch(addReminder(reminderData))
+        dispatch(addReminder(dayOfMonth, reminderData))
     }
     return (
         <Paper>

@@ -7,10 +7,10 @@ import { Grid, Card, CardHeader, CardContent, Modal, DialogContent } from '@mate
 import './Calendar.scss'
 import AddReminderModal from './AddReminderModal'
 import { Dispatch, State } from 'reducers'
-import { Reminder } from 'types/reminders'
+import { ReminderMap } from 'types/reminders'
 
 interface ConnectedProps {
-    reminders: Reminder[]
+    reminders: ReminderMap
 }
 
 const Calendar: React.FunctionComponent<ConnectedProps & {dispatch: Dispatch}> = ({ dispatch, reminders }) => {

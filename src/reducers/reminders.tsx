@@ -1,24 +1,32 @@
+import _ from 'lodash'
 import { RemindersActions } from "actions/reminders"
-import { Reminder } from "types/reminders"
+import { ReminderMap } from "types/reminders"
 
 interface _RemindersState {
-    reminderList: Reminder[]
+    reminderList: ReminderMap
 }
 
 export type RemindersState = Readonly<_RemindersState>
 
 const initialState: RemindersState = {
-    reminderList: [],
+    reminderList: {},
 }
 
 export default function reminders(state: RemindersState = initialState, action: RemindersActions): RemindersState {
     switch (action.type) {
         case 'addReminder':
+            let remindersForDay = [...(state.reminderList[action.dayOfMonth.format('YYYYMMDD')] || [])]
+            if (remindersForDay.length) {
+                const index = _.sortedIndexBy(remindersForDay, action.reminder, reminder => reminder.time)
+                remindersForDay.splice(index, 0, action.reminder)
+            } else {
+                remindersForDay.push(action.reminder)
+            }
             return {
-                reminderList: [
+                reminderList: {
                     ...state.reminderList,
-                    action.reminder
-                ]
+                    [action.dayOfMonth.format('YYYYMMDD')]: remindersForDay
+                }
             }
         default:
             return state
