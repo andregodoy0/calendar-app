@@ -4,9 +4,18 @@ export interface ReminderData {
     time: string
     color: string 
     city: string
+    forecast?: WeatherData
 }
 
 export interface ReminderMap {
     [dayOfMonth: string]: ReminderData[]
 
+}
+
+export interface WeatherData {
+    city: string
+    icon: string
+    condition: string
+    maxTemp: number
+    minTemp: number
 }

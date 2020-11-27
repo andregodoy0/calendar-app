@@ -21,7 +21,7 @@ const Reminder: React.FunctionComponent<ReminderProps> = ({ calendarDay, data })
     const handleModalClose = () => {
         setModalOpen(false)
     }
-    const { content, time, color, city } = data
+    const { content, time, color, city, forecast } = data
     const onClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setModalOpen(true)
         event.stopPropagation()
@@ -52,7 +52,13 @@ const Reminder: React.FunctionComponent<ReminderProps> = ({ calendarDay, data })
             </Modal>
             <div className='time'>{time}</div>
             <div className='content'>{content}</div>
-            <div className='city'>{city}</div>
+            {forecast &&
+                <img
+                    className='forecast' 
+                    src={forecast.icon}
+                    alt={`${forecast.condition} with max ${forecast.maxTemp} and min ${forecast.minTemp} in ${city}`}
+                />
+            }
         </div>
     )
 }

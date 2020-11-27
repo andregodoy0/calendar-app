@@ -3,6 +3,8 @@
     border: 1px solid;
     border-radius: 5px;
     margin: 1px 0px;
+    font-size: small;
+    line-height: 24px;
 
     $colors: ("red", #ef9a9a), ("purple", #9fa8da), ("green", #80cbc4), ("ÿellow", #fff59d), ("orange", #ffcc80), ("grey", #b0bec5);
 
@@ -13,10 +15,19 @@
         }
     }
 
+    .time {
+        padding-right: 4px;
+    }
     .content {
         width: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-weight: bold;
+    }
+    .forecast {
+        padding-left: 4px;
+        max-width: 24px;
+        max-height: 24px;
     }
 }

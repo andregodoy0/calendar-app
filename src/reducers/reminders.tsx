@@ -44,6 +44,22 @@ export default function reminders(state: RemindersState = initialState, action: 
                 }
             }
         }
+        case 'receiveWeatherForecast': {
+            const remindersForDay = [...state.reminderList[action.dayOfMonth.format('YYYYMMDD')]]
+            const index = _.findIndex(remindersForDay, {id: action.reminder.id})
+            remindersForDay.splice(index, 1, {
+                ...action.reminder,
+                forecast: action.forecast,
+                // create new id to force new render
+                id: _.uniqueId('reminder')
+            })
+            return {
+                reminderList: {
+                    ...state.reminderList,
+                    [action.dayOfMonth.format('YYYYMMDD')]: remindersForDay
+                }
+            }
+        }
         default:
             return state
     }
