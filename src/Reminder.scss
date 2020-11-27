@@ -1,0 +1,14 @@
+.reminder-data {
+    display: flex;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 1px;
+
+    $colors: #ef9a9a, #ce93d8, #9fa8da, #81d4fa, #80cbc4, #c5e1a5, #fff59d, #ffcc80;
+
+    @each $color in $colors {
+        &.color-#{$color} {
+            background-color: $color;
+        }
+    }
+}

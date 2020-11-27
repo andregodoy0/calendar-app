@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Moment } from 'moment'
+import _ from 'lodash'
 import { Button, Paper, TextField } from '@material-ui/core'
-import { GithubPicker } from 'react-color'
+import { CirclePicker } from 'react-color'
 
 import './AddReminderModal.scss'
-import { Reminder } from 'types/reminders'
+import { ReminderData } from 'types/reminders'
 import { Dispatch } from 'reducers'
 import { addReminder } from 'actions/reminders'
 
@@ -15,10 +16,11 @@ interface AddReminderModalProps {
 
 const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayOfMonth, dispatch }) => {
     const [reminderData, setReminderData] = useState({
+        id: _.uniqueId('reminder'),
         color: '#008B02',
         time: dayOfMonth.format("HH:MM")
-    } as Reminder)
-    const updateReminder = (updatedData: Partial<Reminder>) => {
+    } as ReminderData)
+    const updateReminder = (updatedData: Partial<ReminderData>) => {
         setReminderData({
             ...reminderData,
             ...updatedData,
@@ -35,9 +37,9 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
                 <TextField
                     fullWidth
                     type='text'
-                    value={reminderData.reminder}
+                    value={reminderData.content}
                     label='Remind me to'
-                    onChange={event => updateReminder({ reminder: event.target.value })}
+                    onChange={event => updateReminder({ content: event.target.value })}
                 />
                 <label></label>
                 <TextField
@@ -57,8 +59,8 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
                     value={reminderData.city}
                     onChange={event => updateReminder({ city: event.target.value })}
                 />
-                <GithubPicker
-                    triangle='hide'
+                <CirclePicker
+                    colors={['#ef9a9a', '#ce93d8', '#9fa8da', '#81d4fa', '#80cbc4', '#c5e1a5', '#fff59d', '#ffcc80']}
                     color={reminderData.color}
                     onChangeComplete={({ hex }) => updateReminder({ color: hex })}
                 />

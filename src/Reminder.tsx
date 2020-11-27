@@ -1,10 +1,20 @@
-import React from 'react';
+import React from 'react'
+import { ReminderData } from 'types/reminders'
+import classnames from 'classnames'
 
+import 'Reminder.scss'
 
-function Reminder() {
+interface ReminderProps {
+    data: ReminderData
+}
+
+const Reminder: React.FunctionComponent<ReminderProps> = ({ data }) => {
+    const { content, time, color, city } = data
     return (
-        <div>
-            Modal test
+        <div className={classnames('reminder-data', `color-${color}`)}>
+            <div className='time'>{time}</div>
+            <div className='content'>{content}</div>
+            <div className='city'>{city}</div>
         </div>
     )
 }

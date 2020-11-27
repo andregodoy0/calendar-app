@@ -4,8 +4,10 @@ import moment, { Moment } from 'moment'
 import classnames from 'classnames'
 import { Grid, Card, CardHeader, CardContent, Modal, DialogContent } from '@material-ui/core'
 
-import './Calendar.scss'
-import AddReminderModal from './AddReminderModal'
+import 'Calendar.scss'
+import Reminder from 'Reminder'
+import AddReminderModal from 'AddReminderModal'
+
 import { Dispatch, State } from 'reducers'
 import { ReminderMap } from 'types/reminders'
 
@@ -13,7 +15,7 @@ interface ConnectedProps {
     reminders: ReminderMap
 }
 
-const Calendar: React.FunctionComponent<ConnectedProps & {dispatch: Dispatch}> = ({ dispatch, reminders }) => {
+const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }> = ({ dispatch, reminders }) => {
     const [isModalOpen, setModalOpen] = useState(false)
     const [newReminderDay, setReminderDay] = useState(moment())
 
@@ -33,6 +35,15 @@ const Calendar: React.FunctionComponent<ConnectedProps & {dispatch: Dispatch}> =
                 <CardHeader subheader={dayOfWeek} size='small' margin='dense' />
             </Card>
         ))
+    }
+    const getRemindersForDay = (keyForDayOfYear: string) => {
+        return (
+            <>
+                {(reminders[keyForDayOfYear] || []).map(reminder =>
+                    <Reminder data={reminder} key={reminder.id} />
+                )}
+            </>
+        )
     }
     const createCalendarDay = (calendarDay: Moment) => {
         const dayOfWeek = calendarDay.day()
@@ -54,6 +65,7 @@ const Calendar: React.FunctionComponent<ConnectedProps & {dispatch: Dispatch}> =
                 <CardContent
                     onClick={() => createNewTask(calendarDay)}
                 >
+                    {getRemindersForDay(calendarDay.format('YYYYMMDD'))}
                 </CardContent>
             </Card>
         )
@@ -105,8 +117,6 @@ const Calendar: React.FunctionComponent<ConnectedProps & {dispatch: Dispatch}> =
                     {renderCurrentMonth()}
                 </Grid>
             </div>
-            <div>Reminder list</div>
-            <div>{JSON.stringify(reminders)}</div>
         </div>
     )
 }

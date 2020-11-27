@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-import './App.scss';
-import Calendar from './Calendar';
+import 'App.scss'
+import Calendar from 'Calendar'
 
 function App() {
     return (
@@ -12,7 +12,7 @@ function App() {
               <Calendar />
           </div>
       </div>
-    );
+    )
 }
 
-export default App;
+export default App

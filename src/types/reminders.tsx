@@ -1,11 +1,12 @@
-export interface Reminder {
-    reminder: string
+export interface ReminderData {
+    id: string
+    content: string
     time: string
     color: string 
     city: string
 }
 
 export interface ReminderMap {
-    [dayOfMonth: string]: Reminder[]
+    [dayOfMonth: string]: ReminderData[]
 
 }

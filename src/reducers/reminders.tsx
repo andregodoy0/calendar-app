@@ -14,8 +14,8 @@ const initialState: RemindersState = {
 
 export default function reminders(state: RemindersState = initialState, action: RemindersActions): RemindersState {
     switch (action.type) {
-        case 'addReminder':
-            let remindersForDay = [...(state.reminderList[action.dayOfMonth.format('YYYYMMDD')] || [])]
+        case 'addReminder': {
+            const remindersForDay = [...(state.reminderList[action.dayOfMonth.format('YYYYMMDD')] || [])]
             if (remindersForDay.length) {
                 const index = _.sortedIndexBy(remindersForDay, action.reminder, reminder => reminder.time)
                 remindersForDay.splice(index, 0, action.reminder)
@@ -28,6 +28,7 @@ export default function reminders(state: RemindersState = initialState, action: 
                     [action.dayOfMonth.format('YYYYMMDD')]: remindersForDay
                 }
             }
+        }
         default:
             return state
     }

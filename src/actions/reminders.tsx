@@ -1,8 +1,8 @@
 import { Moment } from "moment"
-import { Reminder } from "types/reminders"
+import { ReminderData } from "types/reminders"
 
 
-export function addReminder(dayOfMonth: Moment, reminder: Reminder) {
+export function addReminder(dayOfMonth: Moment, reminder: ReminderData) {
     return {
         type: 'addReminder' as 'addReminder',
         dayOfMonth,
