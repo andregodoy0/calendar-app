@@ -1,8 +1,6 @@
 .new-reminder-modal {
-    .chrome-picker {
-        bottom: 0px;
-        left: 0px;
-        right: 225px;
-        top: -240px;
+    .circle-picker {
+        flex-direction: row;
+        margin: 12px 0px !important;
     }
 }

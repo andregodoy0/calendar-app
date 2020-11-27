@@ -9,7 +9,8 @@ import Reminder from 'Reminder'
 import AddReminderModal from 'AddReminderModal'
 
 import { Dispatch, State } from 'reducers'
-import { ReminderMap } from 'types/reminders'
+import { ReminderData, ReminderMap } from 'types/reminders'
+import { addReminder } from 'actions/reminders'
 
 interface ConnectedProps {
     reminders: ReminderMap
@@ -94,6 +95,11 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
         return cells
     }
 
+    const onSubmit = (dayOfMonth: Moment, reminderData: ReminderData) => {
+        dispatch(addReminder(dayOfMonth, reminderData))
+        setModalOpen(false)
+    }
+
     return (
         <div>
             <Modal
@@ -106,7 +112,7 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
                 <DialogContent>
                     <AddReminderModal
                         dayOfMonth={newReminderDay}
-                        dispatch={dispatch}
+                        onSubmit={onSubmit}
                     />
                 </DialogContent>
             </Modal>

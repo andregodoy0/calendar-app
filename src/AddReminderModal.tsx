@@ -4,17 +4,18 @@ import _ from 'lodash'
 import { Button, Paper, TextField } from '@material-ui/core'
 import { CirclePicker } from 'react-color'
 
-import './AddReminderModal.scss'
+import 'AddReminderModal.scss'
 import { ReminderData } from 'types/reminders'
-import { Dispatch } from 'reducers'
-import { addReminder } from 'actions/reminders'
 
 interface AddReminderModalProps {
     dayOfMonth: Moment,
-    dispatch: Dispatch
+    onSubmit: (dayOfMonth: Moment, reminderData: ReminderData) => void,
 }
 
-const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayOfMonth, dispatch }) => {
+const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayOfMonth, onSubmit }) => {
+    const colorSet = [
+        '#ef9a9a', '#ce93d8', '#9fa8da', '#81d4fa', '#80cbc4', '#c5e1a5', '#fff59d', '#ffcc80',
+    ]
     const [reminderData, setReminderData] = useState({
         id: _.uniqueId('reminder'),
         color: '#008B02',
@@ -27,8 +28,7 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
         })
     }
     const submitForm = () => {
-        console.log(reminderData)
-        dispatch(addReminder(dayOfMonth, reminderData))
+        onSubmit(dayOfMonth, reminderData)
     }
     return (
         <Paper>
@@ -41,10 +41,9 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
                     label='Remind me to'
                     onChange={event => updateReminder({ content: event.target.value })}
                 />
-                <label></label>
                 <TextField
                     id='time'
-                    label={`on ${dayOfMonth.format('MMM DD')} at`}
+                    label='When?'
                     type="time"
                     value={reminderData.time}
                     onChange={event => updateReminder({ time: event.target.value })}
@@ -55,14 +54,16 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
                 <TextField
                     fullWidth
                     type='text'
-                    label='City'
+                    label='Where?'
+                    defaultValue='New York'
                     value={reminderData.city}
                     onChange={event => updateReminder({ city: event.target.value })}
                 />
                 <CirclePicker
-                    colors={['#ef9a9a', '#ce93d8', '#9fa8da', '#81d4fa', '#80cbc4', '#c5e1a5', '#fff59d', '#ffcc80']}
+                    colors={colorSet}
                     color={reminderData.color}
                     onChangeComplete={({ hex }) => updateReminder({ color: hex })}
+                    width='600px'
                 />
                 <Button
                     variant='contained'
