@@ -25,18 +25,3 @@
         }
     }
 }
-
-.new-reminder-modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    .MuiDialogContent-root {
-        max-width: 700px;
-        max-height: 500px;
-        
-        .MuiPaper-root {
-            padding: 24px;
-        }
-    } 
-}

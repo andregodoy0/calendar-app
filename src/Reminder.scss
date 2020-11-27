@@ -2,13 +2,14 @@
     display: flex;
     border: 1px solid;
     border-radius: 5px;
-    padding: 1px;
+    margin: 1px 0px;
 
     $colors: ("red", #ef9a9a), ("purple", #9fa8da), ("green", #80cbc4), ("ÿellow", #fff59d), ("orange", #ffcc80), ("grey", #b0bec5);
 
     @each $color in $colors {
         &.color-#{nth($color, 1)} {
             background-color: nth($color, 2);
+            border-color: darken(nth($color, 2), 30%);
         }
     }
 }

@@ -4,20 +4,21 @@ import _ from 'lodash'
 import { Button, Paper, TextField } from '@material-ui/core'
 import { CirclePicker } from 'react-color'
 
-import 'AddReminderModal.scss'
+import 'ReminderModal.scss'
 import { ReminderData } from 'types/reminders'
 import { colorSet } from 'utils'
 
-interface AddReminderModalProps {
-    dayOfMonth: Moment,
+interface ReminderModalProps {
+    calendarDay: Moment,
     onSubmit: (dayOfMonth: Moment, reminderData: ReminderData) => void,
+    existingReminder?: ReminderData,
 }
 
-const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayOfMonth, onSubmit }) => {
-    const [reminderData, setReminderData] = useState({
+const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDay, onSubmit, existingReminder }) => {
+    const [reminderData, setReminderData] = useState(existingReminder || {
         id: _.uniqueId('reminder'),
         color: colorSet[0],
-        time: dayOfMonth.format("HH:MM")
+        time: calendarDay.format("HH:MM")
     } as ReminderData)
     const [validationError, setValidationError] = useState(false)
     const updateReminder = (updatedData: Partial<ReminderData>) => {
@@ -34,11 +35,11 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
         if (validateForm()) {
             return;
         }
-        onSubmit(dayOfMonth, reminderData)
+        onSubmit(calendarDay, reminderData)
     }
     return (
         <Paper>
-            <h2>Create new reminder:</h2>
+            <h2>{existingReminder ? 'Edit reminder:' : 'Create new reminder:'}</h2>
             <form noValidate autoComplete="off">
                 <TextField
                     autoFocus
@@ -52,10 +53,11 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
                     label='Remind me to'
                     onChange={event => updateReminder({ content: event.target.value })}
                 />
+                {/* {TODO: NEED TO EDIT DATE} */}
                 <TextField
                     id='time'
                     label='When?'
-                    type="time"
+                    type='time'
                     value={reminderData.time}
                     onChange={event => updateReminder({ time: event.target.value })}
                     inputProps={{
@@ -74,14 +76,14 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
                     colors={colorSet}
                     color={reminderData.color}
                     onChangeComplete={({ hex }) => updateReminder({ color: hex })}
-                    width='600px'
+                    width='400px'
                 />
                 <Button
                     variant='contained'
                     color='primary'
                     onClick={submitForm}
                 >
-                    Add
+                    {existingReminder ? 'Edit' : 'Add'}
                 </Button>
             </form>
 
@@ -89,4 +91,4 @@ const AddReminderModal: React.FunctionComponent<AddReminderModalProps> = ({ dayO
     )
 }
 
-export default AddReminderModal
+export default ReminderModal

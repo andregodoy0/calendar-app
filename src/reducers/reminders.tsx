@@ -29,6 +29,17 @@ export default function reminders(state: RemindersState = initialState, action: 
                 }
             }
         }
+        case 'updateReminder': {
+            const remindersForDay = [...state.reminderList[action.dayOfMonth.format('YYYYMMDD')]]
+            const index = _.findIndex(remindersForDay, {id: action.reminder.id})
+            remindersForDay.splice(index, 1, action.reminder)
+            return {
+                reminderList: {
+                    ...state.reminderList,
+                    [action.dayOfMonth.format('YYYYMMDD')]: remindersForDay
+                }
+            }
+        }
         default:
             return state
     }

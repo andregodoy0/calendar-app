@@ -6,7 +6,7 @@ import { Grid, Card, CardHeader, CardContent, Modal, DialogContent } from '@mate
 
 import 'Calendar.scss'
 import Reminder from 'Reminder'
-import AddReminderModal from 'AddReminderModal'
+import ReminderModal from 'ReminderModal'
 
 import { Dispatch, State } from 'reducers'
 import { ReminderData, ReminderMap } from 'types/reminders'
@@ -37,11 +37,16 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
             </Card>
         ))
     }
-    const getRemindersForDay = (keyForDayOfYear: string) => {
+    const getRemindersForDay = (calendarDay: Moment) => {
+        const keyForDayOfYear = calendarDay.format('YYYYMMDD')
         return (
             <>
                 {(reminders[keyForDayOfYear] || []).map(reminder =>
-                    <Reminder data={reminder} key={reminder.id} />
+                    <Reminder
+                        calendarDay={calendarDay}
+                        data={reminder} 
+                        key={reminder.id}
+                    />
                 )}
             </>
         )
@@ -66,7 +71,7 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
                 <CardContent
                     onClick={() => createNewTask(calendarDay)}
                 >
-                    {getRemindersForDay(calendarDay.format('YYYYMMDD'))}
+                    {getRemindersForDay(calendarDay)}
                 </CardContent>
             </Card>
         )
@@ -110,8 +115,8 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
                 aria-describedby="add-new-reminder"
             >
                 <DialogContent>
-                    <AddReminderModal
-                        dayOfMonth={newReminderDay}
+                    <ReminderModal
+                        calendarDay={newReminderDay}
                         onSubmit={onSubmit}
                     />
                 </DialogContent>

@@ -10,5 +10,14 @@ export function addReminder(dayOfMonth: Moment, reminder: ReminderData) {
     }
 }
 
+export function updateReminder(dayOfMonth: Moment, reminder: ReminderData) {
+    return {
+        type: 'updateReminder' as 'updateReminder',
+        dayOfMonth,
+        reminder,
+    }
+}
+
 export type RemindersActions = 
-    ReturnType<typeof addReminder>
+    ReturnType<typeof addReminder> |
+    ReturnType<typeof updateReminder>
