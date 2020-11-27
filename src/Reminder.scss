@@ -12,4 +12,11 @@
             border-color: darken(nth($color, 2), 30%);
         }
     }
+
+    .content {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
