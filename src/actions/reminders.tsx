@@ -35,7 +35,7 @@ export type RemindersActions = (
  */
 export const fetchWeatherForecast = (dayOfMonth: Moment, reminderData: ReminderData) => {
     return async (dispatch: Dispatch) => {
-        const forecastDays = dayOfMonth.startOf('day').diff(moment().startOf('day'), 'days')
+        const forecastDays = moment(dayOfMonth).startOf('day').diff(moment().startOf('day'), 'days')
         if (!API_KEY || !reminderData.city || forecastDays < 0 || forecastDays > API_MAXIMUM_FORECAST) {
             dispatch(updateReminder(dayOfMonth, reminderData))
             return

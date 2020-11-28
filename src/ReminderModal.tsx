@@ -15,16 +15,17 @@ interface ReminderModalProps {
 }
 
 const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDay, onSubmit, existingReminder }) => {
-    const [reminderDay, setReminderDay] = useState(calendarDay.format('YYYY-MM-DD'))
+    const [reminderDay, setReminderDay] = useState((existingReminder?.datetime || calendarDay).format('YYYY-MM-DD'))
+    const [reminderTime, setReminderTime] = useState((existingReminder?.datetime ||calendarDay).format('HH:mm'))
     const [reminderData, setReminderData] = useState(existingReminder || {
         id: _.uniqueId('reminder'),
         city: '',
         content: '',
         color: colorSet[0],
-        time: calendarDay.format("HH:MM")
+        datetime: calendarDay,
     } as ReminderData)
     const [validationError, setValidationError] = useState(false)
-    const updateReminder = (updatedData: Partial<ReminderData>) => {
+    const updateStateReminder = (updatedData: Partial<ReminderData>) => {
         setReminderData({
             ...reminderData,
             ...updatedData,
@@ -38,7 +39,9 @@ const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDa
         if (isFormValid()) {
             return
         }
-        onSubmit(moment(reminderDay), reminderData)
+        const [hour, minute] = reminderTime.split(':')
+        const newDatetime = moment(reminderDay).hour(parseInt(hour)).minute(parseInt(minute))
+        onSubmit(calendarDay, {...reminderData, datetime: newDatetime})
     }
     return (
         <Paper>
@@ -54,9 +57,10 @@ const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDa
                     value={reminderData.content}
                     helperText='Must be less than 30 characters and not be empty'
                     label='Remind me to'
-                    onChange={event => updateReminder({ content: event.target.value })}
+                    onChange={event => updateStateReminder({ content: event.target.value })}
                 />
                 <TextField
+                    required
                     id='date'
                     label='On'
                     type='date'
@@ -64,11 +68,12 @@ const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDa
                     onChange={event => setReminderDay(event.target.value)}
                 />
                 <TextField
+                    required
                     id='time'
                     label='When?'
                     type='time'
-                    value={reminderData.time}
-                    onChange={event => updateReminder({ time: event.target.value })}
+                    value={reminderTime}
+                    onChange={event => setReminderTime(event.target.value)}
                     inputProps={{
                         step: 1500, // 15 min
                     }}
@@ -79,12 +84,12 @@ const ReminderModal: React.FunctionComponent<ReminderModalProps> = ({ calendarDa
                     label='Where?'
                     value={reminderData.city}
                     helperText='Get weather forecast if the event is within the next three days'
-                    onChange={event => updateReminder({ city: event.target.value })}
+                    onChange={event => updateStateReminder({ city: event.target.value })}
                 />
                 <CirclePicker
                     colors={colorSet}
                     color={reminderData.color}
-                    onChangeComplete={({ hex }) => updateReminder({ color: hex })}
+                    onChangeComplete={({ hex }) => updateStateReminder({ color: hex })}
                     width='400px'
                 />
                 <Button

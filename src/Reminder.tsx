@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { ReminderData } from 'types/reminders'
 import classnames from 'classnames'
+import { Moment } from 'moment'
+import { useDispatch } from 'react-redux'
+import { fetchWeatherForecast } from 'actions/reminders'
+import { DialogContent, Modal } from '@material-ui/core'
 
 import 'Reminder.scss'
 import { colorMap } from 'utils'
 import ReminderModal from 'ReminderModal'
-import { useDispatch } from 'react-redux'
-import { fetchWeatherForecast } from 'actions/reminders'
-import { Moment } from 'moment'
-import { DialogContent, Modal } from '@material-ui/core'
 
 interface ReminderProps {
     calendarDay: Moment,
@@ -21,7 +21,7 @@ const Reminder: React.FunctionComponent<ReminderProps> = ({ calendarDay, data })
     const handleModalClose = () => {
         setModalOpen(false)
     }
-    const { content, time, color, city, forecast } = data
+    const { content, datetime, color, city, forecast } = data
     const onClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setModalOpen(true)
         event.stopPropagation()
@@ -51,7 +51,7 @@ const Reminder: React.FunctionComponent<ReminderProps> = ({ calendarDay, data })
                     />
                 </DialogContent>
             </Modal>
-            <div className='time'>{time}</div>
+            <div className='time'>{datetime.format('HH:mm')}</div>
             <div className='content' title={content}>{content}</div>
             {forecast &&
                 <img

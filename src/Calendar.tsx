@@ -32,7 +32,7 @@ const Calendar: React.FunctionComponent<ConnectedProps & { dispatch: Dispatch }>
         const columns = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         return columns.map(dayOfWeek => (
             <Card variant='outlined' className='header calendar-day' key={dayOfWeek}>
-                <CardHeader subheader={dayOfWeek} size='small' margin='dense' />
+                <CardHeader subheader={dayOfWeek} />
             </Card>
         ))
     }

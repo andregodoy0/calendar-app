@@ -1,7 +1,9 @@
+import { Moment } from "moment";
+
 export interface ReminderData {
     id: string
     content: string
-    time: string
+    datetime: Moment
     color: string 
     city: string
     forecast?: WeatherData
