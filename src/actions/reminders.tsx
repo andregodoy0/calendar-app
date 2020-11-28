@@ -47,7 +47,8 @@ export const fetchWeatherForecast = (dayOfMonth: Moment, reminderData: ReminderD
                 { method: 'GET' }
             )).json()
             if (!response.error) {
-                const forecast = response.forecast.forecastday[forecastDays-1].day
+                const forecastIndex = forecastDays ? forecastDays-1 : forecastDays
+                const forecast = response.forecast.forecastday[forecastIndex].day
                 const forecastData: WeatherData = {
                     city: response.location.name,
                     icon: forecast.condition.icon,
