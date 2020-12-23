@@ -1,0 +1,27 @@
+.calendar {
+    display: flex;
+    flex-flow: column wrap;
+
+    .calendar-day {
+        // each cell has 1/7 of available width
+        flex-basis: 14%;
+        cursor: pointer;
+
+        &.header {
+            background-color: lightblue;
+            cursor: unset;
+        }
+
+        &.is-weekend {
+            background-color: #efefef;
+
+            .MuiTypography-colorTextSecondary {
+                color: blue;
+            }
+        }
+
+        &.is-other-month .MuiTypography-colorTextSecondary {
+            color: #cccccc;
+        }
+    }
+}
